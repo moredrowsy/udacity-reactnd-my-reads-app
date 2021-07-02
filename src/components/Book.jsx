@@ -3,9 +3,17 @@ import { BookSelvesContext } from '../App';
 
 export default function Book(props) {
   const bookShelves = useContext(BookSelvesContext);
-  const { book } = props;
+  const { book, updateBook } = props;
   const { imageLinks, title, authors } = book;
-  let thumbnail = (imageLinks && imageLinks.thumbnail) || '';
+  const thumbnail = (imageLinks && imageLinks.thumbnail) || '';
+
+  const onChangeHandle = (e) => {
+    const moveToShelf = e.target.value;
+    if (book.shelf !== moveToShelf) {
+      book.shelf = moveToShelf;
+      updateBook(book, moveToShelf);
+    }
+  };
 
   return (
     <div className='book'>
@@ -19,7 +27,10 @@ export default function Book(props) {
           }}
         ></div>
         <div className='book-shelf-changer'>
-          <select>
+          <select
+            onClick={onChangeHandle}
+            defaultValue={book.shelf ? book.shelf : 'none'}
+          >
             <option value='move' disabled>
               Move to...
             </option>
@@ -28,7 +39,6 @@ export default function Book(props) {
                 {metadata.shelfTitle}
               </option>
             ))}
-            <option value='none'>None</option>
           </select>
         </div>
       </div>

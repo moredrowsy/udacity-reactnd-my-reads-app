@@ -5,7 +5,7 @@ import { BookSelvesContext } from '../App';
 
 export default function BookList(props) {
   const bookShelves = useContext(BookSelvesContext);
-  const { books, title } = props;
+  const { books, title, updateBook } = props;
 
   const getShelfBooks = (shelf) => books.filter((book) => book.shelf === shelf);
 
@@ -16,13 +16,16 @@ export default function BookList(props) {
       </div>
 
       <div className='list-books-content'>
-        {bookShelves.map((metaData) => (
-          <BookShelf
-            key={metaData.shelf}
-            bookShelfTitle={metaData.shelfTitle}
-            bookShelfBooks={getShelfBooks(metaData.shelf)}
-          />
-        ))}
+        {bookShelves
+          .filter((metaData) => metaData.shelf !== 'none')
+          .map((metaData) => (
+            <BookShelf
+              key={metaData.shelf}
+              bookShelfTitle={metaData.shelfTitle}
+              bookShelfBooks={getShelfBooks(metaData.shelf)}
+              updateBook={updateBook}
+            />
+          ))}
       </div>
 
       <div className='open-search'>

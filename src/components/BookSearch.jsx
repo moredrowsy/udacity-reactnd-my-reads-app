@@ -1,25 +1,41 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import * as BooksAPI from '../utils/BooksAPI';
 
 import BookGrid from './BookGrid';
 
 export default function BookSearch(props) {
+  const { books, updateBook } = props;
   const [query, setQuery] = useState('');
   const [queryBooks, setQueryBooks] = useState([]);
+  const textInput = useRef(null);
 
   const clearQueryBooks = () => setQueryBooks([]);
 
-  const updateQueryBooks = useCallback(async (query) => {
-    if (query) {
-      const maxResults = 50;
-      const data = await BooksAPI.search(query, maxResults);
-      if (data && !data.error) setQueryBooks(data);
-      else clearQueryBooks();
-    } else {
-      clearQueryBooks();
-    }
-  }, []);
+  const updateQueryBooks = useCallback(
+    async (query) => {
+      if (query) {
+        const maxResults = 50;
+        const results = await BooksAPI.search(query, maxResults);
+        if (results && !results.error) {
+          // For some reason, results do not contain shelf data
+          // Update results book shelves with local book list data
+          for (const book of books) {
+            for (const queryBook of results) {
+              if (queryBook.id === book.id) {
+                queryBook.shelf = book.shelf;
+                break;
+              }
+            }
+          }
+          setQueryBooks(results);
+        } else clearQueryBooks();
+      } else {
+        clearQueryBooks();
+      }
+    },
+    [books]
+  );
 
   const onChangeHandle = (query) => {
     query = query.trim();
@@ -28,6 +44,7 @@ export default function BookSearch(props) {
 
   useEffect(() => {
     updateQueryBooks(query);
+    if (textInput) textInput.current.focus();
   }, [updateQueryBooks, query]);
 
   return (
@@ -43,12 +60,13 @@ export default function BookSearch(props) {
             placeholder='Search by title or author'
             value={query}
             onChange={(e) => onChangeHandle(e.target.value)}
+            ref={textInput}
           />
         </div>
       </div>
 
       <div className='search-books-results'>
-        <BookGrid books={queryBooks} />
+        <BookGrid books={queryBooks} updateBook={updateBook} />
       </div>
     </div>
   );
