@@ -5,6 +5,7 @@ import * as BooksAPI from '../utils/BooksAPI';
 import BookGrid from './BookGrid';
 
 export default function BookSearch(props) {
+  const { bookShelvesMetaData } = props;
   const [query, setQuery] = useState('');
   const [queryBooks, setQueryBooks] = useState([]);
 
@@ -48,7 +49,10 @@ export default function BookSearch(props) {
       </div>
 
       <div className='search-books-results'>
-        <BookGrid books={queryBooks} />
+        <BookGrid
+          books={queryBooks}
+          bookShelvesMetaData={bookShelvesMetaData}
+        />
       </div>
     </div>
   );

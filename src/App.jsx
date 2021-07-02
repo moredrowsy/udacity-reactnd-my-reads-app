@@ -1,10 +1,17 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Route, useHistory } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import * as BooksAPI from './utils/BooksAPI';
 
 import './App.css';
 import BookList from './components/BookList';
 import BookSearch from './components/BookSearch';
+
+const AppTitle = 'My Reads';
+const bookShelvesMetaData = [
+  { shelfTitle: 'Currently Reading', shelf: 'currentlyReading' },
+  { shelfTitle: 'Want to Read', shelf: 'wantToRead' },
+  { shelfTitle: 'Read', shelf: 'read' },
+];
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -21,10 +28,14 @@ function App() {
   return (
     <div className='App'>
       <Route path='/' exact>
-        <BookList books={books} />
+        <BookList
+          title={AppTitle}
+          books={books}
+          bookShelvesMetaData={bookShelvesMetaData}
+        />
       </Route>
       <Route path='/search'>
-        <BookSearch />
+        <BookSearch bookShelvesMetaData={bookShelvesMetaData} />
       </Route>
     </div>
   );

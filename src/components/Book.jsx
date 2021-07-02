@@ -1,10 +1,9 @@
 import React from 'react';
 
 export default function Book(props) {
-  const { book } = props;
+  const { book, bookShelvesMetaData } = props;
   const { imageLinks, title, authors } = book;
-  let thumbnail = '';
-  if (imageLinks && imageLinks.thumbnail) thumbnail = imageLinks.thumbnail;
+  let thumbnail = (imageLinks && imageLinks.thumbnail) || '';
 
   return (
     <div className='book'>
@@ -22,9 +21,11 @@ export default function Book(props) {
             <option value='move' disabled>
               Move to...
             </option>
-            <option value='currentlyReading'>Currently Reading</option>
-            <option value='wantToRead'>Want to Read</option>
-            <option value='read'>Read</option>
+            {bookShelvesMetaData.map((metadata) => (
+              <option key={metadata.shelf} value={metadata.shelf}>
+                {metadata.shelfTitle}
+              </option>
+            ))}
             <option value='none'>None</option>
           </select>
         </div>
