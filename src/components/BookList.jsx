@@ -17,21 +17,19 @@ export default function BookList(props) {
 
       <div className='list-books-content'>
         {bookShelves
-          .filter((metaData) => metaData.shelf !== 'none')
-          .map((metaData) => (
+          .filter((bookShelf) => bookShelf.shelf !== 'none')
+          .map((bookShelf) => (
             <BookShelf
-              key={metaData.shelf}
-              bookShelfTitle={metaData.shelfTitle}
-              bookShelfBooks={getShelfBooks(metaData.shelf)}
+              key={bookShelf.shelf}
+              bookShelfTitle={bookShelf.shelfTitle}
+              bookShelfBooks={getShelfBooks(bookShelf.shelf)}
               updateBook={updateBook}
             />
           ))}
       </div>
 
       <div className='open-search'>
-        <Link to='/search' onClick={() => {}}>
-          Add a book
-        </Link>
+        <Link to='/search'>Add a book</Link>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ export default function Book(props) {
   const { imageLinks, title, authors } = book;
   const thumbnail = (imageLinks && imageLinks.thumbnail) || '';
 
-  const onChangeHandle = (e) => {
+  const onClickHandle = (e) => {
     const moveToShelf = e.target.value;
     if (book.shelf !== moveToShelf) {
       book.shelf = moveToShelf;
@@ -28,7 +28,7 @@ export default function Book(props) {
         ></div>
         <div className='book-shelf-changer'>
           <select
-            onClick={onChangeHandle}
+            onClick={onClickHandle}
             defaultValue={book.shelf ? book.shelf : 'none'}
           >
             <option value='move' disabled>

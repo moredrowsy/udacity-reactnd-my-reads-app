@@ -19,7 +19,7 @@ export default function BookSearch(props) {
         const results = await BooksAPI.search(query, maxResults);
         if (results && !results.error) {
           // For some reason, results do not contain shelf data
-          // Update results book shelves with local book list data
+          // Update results with local book shelf data
           for (const book of books) {
             for (const queryBook of results) {
               if (queryBook.id === book.id) {
@@ -37,10 +37,7 @@ export default function BookSearch(props) {
     [books]
   );
 
-  const onChangeHandle = (query) => {
-    query = query.trim();
-    setQuery(query);
-  };
+  const onChangeHandle = (query) => setQuery(query.trim());
 
   useEffect(() => {
     updateQueryBooks(query);
@@ -50,7 +47,7 @@ export default function BookSearch(props) {
   return (
     <div className='search-books'>
       <div className='search-books-bar'>
-        <Link to='/' className='close-search' onClick={() => {}}>
+        <Link to='/' className='close-search'>
           Close
         </Link>
 
