@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { BookSelvesContext } from '../App';
 
 export default function Book(props) {
-  const { book, bookShelvesMetaData } = props;
+  const bookShelves = useContext(BookSelvesContext);
+  const { book } = props;
   const { imageLinks, title, authors } = book;
   let thumbnail = (imageLinks && imageLinks.thumbnail) || '';
 
@@ -21,7 +23,7 @@ export default function Book(props) {
             <option value='move' disabled>
               Move to...
             </option>
-            {bookShelvesMetaData.map((metadata) => (
+            {bookShelves.map((metadata) => (
               <option key={metadata.shelf} value={metadata.shelf}>
                 {metadata.shelfTitle}
               </option>

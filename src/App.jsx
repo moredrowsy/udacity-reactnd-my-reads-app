@@ -29,17 +29,14 @@ function App() {
   return (
     <div className='App'>
       <Route path='/' exact>
-        <BookList
-          title={APP_TITLE}
-          books={books}
-          bookShelvesMetaData={BOOKSELVES_METADATA}
-        />
+        <BookList title={APP_TITLE} books={books} />
       </Route>
       <Route path='/search'>
-        <BookSearch bookShelvesMetaData={BOOKSELVES_METADATA} />
+        <BookSearch />
       </Route>
     </div>
   );
 }
 
 export default App;
+export const BookSelvesContext = React.createContext(BOOKSELVES_METADATA);
