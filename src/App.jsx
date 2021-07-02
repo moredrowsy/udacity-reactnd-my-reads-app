@@ -6,8 +6,8 @@ import './App.css';
 import BookList from './components/BookList';
 import BookSearch from './components/BookSearch';
 
-const AppTitle = 'My Reads';
-const bookShelvesMetaData = [
+const APP_TITLE = 'MyReads';
+const BOOKSELVES_METADATA = [
   { shelfTitle: 'Currently Reading', shelf: 'currentlyReading' },
   { shelfTitle: 'Want to Read', shelf: 'wantToRead' },
   { shelfTitle: 'Read', shelf: 'read' },
@@ -22,6 +22,7 @@ function App() {
   );
 
   useEffect(() => {
+    document.title = APP_TITLE;
     fetchBooks();
   }, [fetchBooks]);
 
@@ -29,13 +30,13 @@ function App() {
     <div className='App'>
       <Route path='/' exact>
         <BookList
-          title={AppTitle}
+          title={APP_TITLE}
           books={books}
-          bookShelvesMetaData={bookShelvesMetaData}
+          bookShelvesMetaData={BOOKSELVES_METADATA}
         />
       </Route>
       <Route path='/search'>
-        <BookSearch bookShelvesMetaData={bookShelvesMetaData} />
+        <BookSearch bookShelvesMetaData={BOOKSELVES_METADATA} />
       </Route>
     </div>
   );
