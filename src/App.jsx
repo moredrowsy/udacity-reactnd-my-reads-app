@@ -13,6 +13,7 @@ const BOOKSELVES_METADATA = [
   { shelfTitle: 'Read', shelf: 'read' },
   { shelfTitle: 'None', shelf: 'none' },
 ];
+const BookSelvesContext = React.createContext(BOOKSELVES_METADATA);
 
 function App() {
   const [books, setBooks] = useState([]);
@@ -57,4 +58,4 @@ function App() {
 }
 
 export default App;
-export const BookSelvesContext = React.createContext(BOOKSELVES_METADATA);
+export { BookSelvesContext };
