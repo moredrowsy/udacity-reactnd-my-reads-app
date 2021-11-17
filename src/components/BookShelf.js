@@ -1,5 +1,6 @@
 import React from 'react';
 import BookGrid from './BookGrid';
+import PropTypes from 'prop-types';
 
 export default function BookShelf(props) {
   const { bookShelfTitle, bookShelfBooks, updateBook } = props;
@@ -13,3 +14,9 @@ export default function BookShelf(props) {
     </div>
   );
 }
+
+BookShelf.propTypes = {
+  bookShelfTitle: PropTypes.string,
+  bookShelfBooks: PropTypes.array,
+  updateBook: PropTypes.array,
+};

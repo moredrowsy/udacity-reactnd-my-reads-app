@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { debounce } from 'lodash';
 import * as BooksAPI from '../utils/BooksAPI';
+import PropTypes from 'prop-types';
 
 import BookGrid from './BookGrid';
 
@@ -14,9 +16,11 @@ export default function BookSearch(props) {
 
   const updateQueryBooks = useCallback(
     async (query) => {
-      if (query) {
+      let q = query ? query.trim() : '';
+
+      if (q) {
         const maxResults = 50;
-        const results = await BooksAPI.search(query, maxResults);
+        const results = await BooksAPI.search(q, maxResults);
         if (results && !results.error) {
           // For some reason, results do not contain shelf data
           // Update results with local book shelf data
@@ -30,19 +34,24 @@ export default function BookSearch(props) {
           }
           setQueryBooks(results);
         } else clearQueryBooks();
-      } else {
-        clearQueryBooks();
-      }
+      } else clearQueryBooks();
     },
     [books]
   );
 
-  const onChangeHandle = (query) => setQuery(query.trim());
-
+  // Debounce updating query books
   useEffect(() => {
-    updateQueryBooks(query);
+    const debounceUpdateQueryBooks = debounce(
+      () => updateQueryBooks(query),
+      500
+    );
+    debounceUpdateQueryBooks();
     if (textInput) textInput.current.focus();
-  }, [updateQueryBooks, query]);
+
+    return () => {
+      debounceUpdateQueryBooks.cancel();
+    };
+  }, [query, updateQueryBooks]);
 
   return (
     <div className='search-books'>
@@ -56,7 +65,7 @@ export default function BookSearch(props) {
             type='text'
             placeholder='Search by title or author'
             value={query}
-            onChange={(e) => onChangeHandle(e.target.value)}
+            onChange={(e) => setQuery(e.target.value)}
             ref={textInput}
           />
         </div>
@@ -68,3 +77,8 @@ export default function BookSearch(props) {
     </div>
   );
 }
+
+BookSearch.propTypes = {
+  book: PropTypes.array,
+  updateBook: PropTypes.func,
+};

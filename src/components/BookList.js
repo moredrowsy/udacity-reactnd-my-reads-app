@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import BookShelf from './BookShelf';
 import { BookSelvesContext } from '../App';
+import PropTypes from 'prop-types';
 
 export default function BookList(props) {
   const bookShelves = useContext(BookSelvesContext);
@@ -34,3 +35,9 @@ export default function BookList(props) {
     </div>
   );
 }
+
+BookList.propTypes = {
+  books: PropTypes.array,
+  title: PropTypes.string,
+  updateBook: PropTypes.func,
+};

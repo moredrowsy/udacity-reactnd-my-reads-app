@@ -1,5 +1,6 @@
 import React from 'react';
 import Book from './Book';
+import PropTypes from 'prop-types';
 
 export default function BookGrid(props) {
   const { books, updateBook } = props;
@@ -14,3 +15,8 @@ export default function BookGrid(props) {
     </ol>
   );
 }
+
+BookGrid.propTypes = {
+  books: PropTypes.array,
+  updateBook: PropTypes.func,
+};

@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { BookSelvesContext } from '../App';
+import PropTypes from 'prop-types';
 
 export default function Book(props) {
   const bookShelves = useContext(BookSelvesContext);
@@ -28,7 +29,7 @@ export default function Book(props) {
         ></div>
         <div className='book-shelf-changer'>
           <select
-            onClick={onClickHandle}
+            onChange={onClickHandle}
             defaultValue={book.shelf ? book.shelf : 'none'}
           >
             <option value='move' disabled>
@@ -47,3 +48,8 @@ export default function Book(props) {
     </div>
   );
 }
+
+Book.propTypes = {
+  book: PropTypes.array,
+  updateBook: PropTypes.func,
+};
