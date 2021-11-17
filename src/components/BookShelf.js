@@ -18,5 +18,5 @@ export default function BookShelf(props) {
 BookShelf.propTypes = {
   bookShelfTitle: PropTypes.string,
   bookShelfBooks: PropTypes.array,
-  updateBook: PropTypes.array,
+  updateBook: PropTypes.func,
 };

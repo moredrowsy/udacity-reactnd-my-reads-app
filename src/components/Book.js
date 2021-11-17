@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 export default function Book(props) {
   const bookShelves = useContext(BookSelvesContext);
   const { book, updateBook } = props;
+
   const { imageLinks, title, authors } = book;
   const thumbnail = (imageLinks && imageLinks.thumbnail) || '';
 
@@ -50,6 +51,6 @@ export default function Book(props) {
 }
 
 Book.propTypes = {
-  book: PropTypes.array,
+  book: PropTypes.object,
   updateBook: PropTypes.func,
 };

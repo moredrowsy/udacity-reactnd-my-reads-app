@@ -79,6 +79,6 @@ export default function BookSearch(props) {
 }
 
 BookSearch.propTypes = {
-  book: PropTypes.array,
+  books: PropTypes.array,
   updateBook: PropTypes.func,
 };
